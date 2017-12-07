@@ -26,16 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mywidget.cpp \
-    masonry.cpp
+    masonry_imageitem.cpp \
+    container.cpp
 
 HEADERS += \
-        mywidget.h \
-    masonry.h
+    masonry_imageitem.h \
+    masonry_item.h \
+    masonry_container.h \
+    mywidget.h
 
 FORMS += \
         mywidget.ui
 
 DISTFILES +=
-
-RESOURCES += \
-    myqrc.qrc
