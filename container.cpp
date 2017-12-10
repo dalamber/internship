@@ -101,22 +101,24 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
     {
         for (quint32 i = 0; i < numberOfColumns; i++)
         {
-            quint32 horizontalSpacing;
-            if (i == 0)
-                horizontalSpacing = 0;
-            else
-                horizontalSpacing = _spacingBetweenItems;
+            if ((i + j) >= vectorOfItems.size())
+                break;
+            quint32 horizontalSpacing = _spacingBetweenItems;
             quint32 verticalSpacing;
-            if (j == 0)
+            /*if (j == 0)
                 verticalSpacing = 0;
-            else
+            else*/
                 verticalSpacing = _spacingBetweenItems;
             quint32 tmpHeight = vectorOfItems[i + j]->heightForWidth(itemWidth);
-            QPoint pt(i * itemWidth + horizontalSpacing, heights[i] + verticalSpacing);
+            QPoint pt(i * itemWidth + i * horizontalSpacing, heights[i] + verticalSpacing * (j / numberOfColumns)); //
             QSize sz(itemWidth, tmpHeight);
             QRect rc(pt, sz);
             vectorOfItems[i + j]->setGeometry(rc);
-            heights[i] = tmpHeight;
+            heights[i] += tmpHeight;
+            /*if (j == 0)
+
+            else
+                heights[i] += tmpHeight + verticalSpacing;*/
         }
     }
     delete[] heights;

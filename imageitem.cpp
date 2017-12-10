@@ -10,7 +10,7 @@ ImageItem::ImageItem()
     _geometry = QRect(QPoint(0, 0), QSize(1, 1));
 }
 
-ImageItem::ImageItem(QSize &size)
+ImageItem::ImageItem(const QSize &size)
 {
     imageSize = size;
     _geometry.setSize(size);

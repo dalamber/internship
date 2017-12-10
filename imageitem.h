@@ -11,7 +11,7 @@ namespace masonry
     {
     public:
         ImageItem();
-        explicit ImageItem(QSize &size);
+        explicit ImageItem(const QSize &size);
         ~ImageItem() override;
         quint32 heightForWidth(quint32 width) override;
         void setRectangle(QPoint &point, QSize &size);
