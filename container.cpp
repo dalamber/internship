@@ -22,6 +22,8 @@ void Container::setContainerSize(const QSize &size)
     quint32 numberOfColumns = containerSize.width() / (_itemMinimumWidth + _spacingBetweenItems);
     quint32 numberOfSpaces = numberOfColumns - 1;
     quint32 itemWidth = (containerSize.width() - (numberOfSpaces * _spacingBetweenItems)) / numberOfColumns;
+    if (itemWidth > _itemMaximumWidth)
+        itemWidth = _itemMaximumWidth;
     masonryLayout(numberOfColumns, itemWidth);
 }
 
