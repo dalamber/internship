@@ -14,24 +14,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    /*QFile file("in.txt");
-    if(file.open(QIODevice::ReadOnly |QIODevice::Text))
-    {
-      while(!file.atEnd())
-      {
-          //читаем строку
-          QString str = file.readLine();
-          //Делим строку на слова разделенные пробелом
-          QStringList lst = str.split(" ");
-          //выводим первых три слова
-          qDebug() << lst.at(0) << lst.at(1);
-      }
-    }
-    else
-    {
-      qDebug()<< "can't open file";
-    }*/
-
     QSize myContainerSize(130, 130);
     Container mycontainer(myContainerSize);
     mycontainer.setItemMinimumWidth(20);
