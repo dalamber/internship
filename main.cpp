@@ -25,16 +25,16 @@ int main(int argc, char *argv[])
     mycontainer.setItemMaximumWidth(30);
     mycontainer.setSpacingBetweenItems(10);
 
-    ImageItem item1(QSize(25, 50));
-    ImageItem item2(QSize(25, 30));
+    ImageItem item1(QSize(24, 50)); // 24, 50
+    ImageItem item2(QSize(30, 30)); //26 //30, 30
     ImageItem item3(QSize(25, 50));
-    ImageItem item4(QSize(25, 70));
-    ImageItem item5(QSize(25, 40));
-    ImageItem item6(QSize(25, 45));
+    ImageItem item4(QSize(23, 70));
+    ImageItem item5(QSize(27, 40)); //40
+    ImageItem item6(QSize(25, 45)); //45
     ImageItem item7(QSize(25, 50));
     ImageItem item8(QSize(25, 50));
-    ImageItem item9(QSize(25, 110));
-    ImageItem item10(QSize(25, 80));
+    ImageItem item9(QSize(25, 30)); //,110
+    ImageItem item10(QSize(30, 80)); //25
     ImageItem item11(QSize(25, 30));
 
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     mycontainer.addItem(&item10);
     mycontainer.addItem(&item11);
 
-    mycontainer.setContainerSize(QSize(130, 1000));
+    mycontainer.setContainerSize(QSize(130, 400)); //95
 
     qDebug() << item1.geometry().topLeft().rx() << item1.geometry().topLeft().ry() << item1.geometry().width() << item1.geometry().height() << "\n";
     qDebug() << item2.geometry().topLeft().rx() << item2.geometry().topLeft().ry() << item2.geometry().width() << item2.geometry().height() << "\n";
@@ -63,9 +63,10 @@ int main(int argc, char *argv[])
     qDebug() << item9.geometry().topLeft().rx() << item9.geometry().topLeft().ry() << item9.geometry().width() << item9.geometry().height() << "\n";
     qDebug() << item10.geometry().topLeft().rx() << item10.geometry().topLeft().ry() << item10.geometry().width() << item10.geometry().height() << "\n";
     qDebug() << item11.geometry().topLeft().rx() << item11.geometry().topLeft().ry() << item11.geometry().width() << item11.geometry().height() << "\n";
+
     qDebug() << "Nice!";
 
-    mycontainer.setContainerSize(QSize(145, 1000));
+    /*mycontainer.setContainerSize(QSize(179, 1000));
 
     qDebug() << item1.geometry().topLeft().rx() << item1.geometry().topLeft().ry() << item1.geometry().width() << item1.geometry().height() << "\n";
     qDebug() << item2.geometry().topLeft().rx() << item2.geometry().topLeft().ry() << item2.geometry().width() << item2.geometry().height() << "\n";
@@ -78,7 +79,7 @@ int main(int argc, char *argv[])
     qDebug() << item9.geometry().topLeft().rx() << item9.geometry().topLeft().ry() << item9.geometry().width() << item9.geometry().height() << "\n";
     qDebug() << item10.geometry().topLeft().rx() << item10.geometry().topLeft().ry() << item10.geometry().width() << item10.geometry().height() << "\n";
     qDebug() << item11.geometry().topLeft().rx() << item11.geometry().topLeft().ry() << item11.geometry().width() << item11.geometry().height() << "\n";
-    qDebug() << "Nice!";
+    qDebug() << "Nice!";*/
 
     return a.exit();
 }

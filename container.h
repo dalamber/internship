@@ -36,9 +36,6 @@ namespace masonry
         // Returns ordered list of stored Items
         std::vector<Item *> items() const;
 
-        // Recalculates geometry of all items
-        void update();
-
     private:
         QSize containerSize;
         quint32 _spacingBetweenItems;
@@ -47,6 +44,7 @@ namespace masonry
         std::vector<Item *> vectorOfItems;
         // Masonry
         void masonryLayout(quint32 numberOfColumns, quint32 itemWidth);
+        void masonryLayoutDifferentWidths();
     };
 }
 
