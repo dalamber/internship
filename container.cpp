@@ -177,7 +177,7 @@ void Container::masonryLayoutDifferentWidths()
                 break; // заполнили ряд
             quint32 tmpHeight = vectorOfItems[i + j]->geometry().height();
             if (((heights[i] >= heights[i + 1]) && heights[i + 1] != 0) ||
-                    (widths[i + j - numberOfItemsInPreviousRow - 1] >= tmpWidth + vectorOfItems[i + j]->geometry().width())) // высота над и справа от него
+                    (widths[i + j - numberOfItemsInPreviousRow - 1] >= tmpWidth + vectorOfItems[i + j]->geometry().width()))
             {
                 if (i >= numberOfItemsInPreviousRow)
                 {
@@ -227,6 +227,3 @@ void Container::masonryLayoutDifferentWidths()
     }
     heights.clear();
 }
-
-/*(vectorOfItems[i + j]->geometry().width() <=
-                    vectorOfItems[i + j - numberOfItemsInPreviousRow]->geometry().width()) || // ширина текущего и над ним*/
