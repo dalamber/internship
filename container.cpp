@@ -19,11 +19,6 @@ Container::~Container()
 void Container::setContainerSize(const QSize &size)
 {
     containerSize = size;
-    quint32 numberOfColumns = containerSize.width() / (_itemMinimumWidth + _spacingBetweenItems);
-    quint32 numberOfSpaces = numberOfColumns - 1;
-    quint32 itemWidth = (containerSize.width() - (numberOfSpaces * _spacingBetweenItems)) / numberOfColumns;
-    if (itemWidth > _itemMaximumWidth)
-        itemWidth = _itemMaximumWidth;
     bool flagDifferentWidths = false;
     for (int  i = 1; i < vectorOfItems.size(); i++)
     {
@@ -34,7 +29,14 @@ void Container::setContainerSize(const QSize &size)
         }
     }
     if (flagDifferentWidths == false)
-        masonryLayout(numberOfColumns, itemWidth);
+    {
+        quint32 numberOfColumns = containerSize.width() / (_itemMinimumWidth + _spacingBetweenItems);
+        quint32 numberOfSpaces = numberOfColumns - 1;
+        quint32 itemWidth = (containerSize.width() - (numberOfSpaces * _spacingBetweenItems)) / numberOfColumns;
+        if (itemWidth > _itemMaximumWidth)
+            itemWidth = _itemMaximumWidth;
+        masonryLayout(numberOfColumns, itemWidth);    
+    }
     else
         masonryLayoutDifferentWidths();
 }
@@ -132,13 +134,14 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
 }
 
 // Пока что очень сырая версия
+// Изменения ширины элементов еще нет
 // Masonry with different widths
 void Container::masonryLayoutDifferentWidths()
 {
     std::vector<quint32> heights(vectorOfItems.size());
+    std::vector<quint32> widths(vectorOfItems.size());
     quint32 numberOfColumns = 0;
     quint32 numberOfItemsInPreviousRow = 0;
-    quint32 numberOfRows = 0;
     quint32 tmpWidth = 0;
 
     // укладываем первый ряд
@@ -151,41 +154,41 @@ void Container::masonryLayoutDifferentWidths()
         QSize sz(vectorOfItems[i]->geometry().width(), tmpHeight);
         QRect rc(pt, sz);
         vectorOfItems[i]->setGeometry(rc);
-        heights[i] = tmpHeight;
+        heights[i] = tmpHeight + _spacingBetweenItems; // запоминаем высоты элементов
         tmpWidth += vectorOfItems[i]->geometry().width();
         numberOfColumns++;
+        widths[i] = tmpWidth;
         tmpWidth += _spacingBetweenItems;
     }
-
+    // запоминаем кол-во элементов в предыдущем ряду
     numberOfItemsInPreviousRow = numberOfColumns;
 
     // укладываем последующие ряды
     for(quint32 j = numberOfColumns; j < vectorOfItems.size();)
     {
         numberOfColumns = 0;
-        numberOfRows++;
-        quint32 prevHeight = 0;
+        quint32 prevHeight = 0; // tmp для занятой высоты над текущим элементом
         tmpWidth = 0;
         for (quint32 i = 0; tmpWidth < containerSize.width(); i++)
         {
             if ((i + j) >= vectorOfItems.size())
-                break;
+                break; // превысили число элементов
             if (tmpWidth + vectorOfItems[i + j]->geometry().width() > containerSize.width())
-                break;
+                break; // заполнили ряд
             quint32 tmpHeight = vectorOfItems[i + j]->geometry().height();
-            if ((vectorOfItems[i + j]->geometry().width() <=
-                    vectorOfItems[i + j - numberOfItemsInPreviousRow]->geometry().width()) ||
-                    (vectorOfItems[i + j - numberOfItemsInPreviousRow]->geometry().height() >=
-                    vectorOfItems[i + j - numberOfItemsInPreviousRow + 1]->geometry().height()))
+            if (((heights[i] >= heights[i + 1]) && heights[i + 1] != 0) ||
+                    (widths[i + j - numberOfItemsInPreviousRow - 1] >= tmpWidth + vectorOfItems[i + j]->geometry().width())) // высота над и справа от него
             {
                 if (i >= numberOfItemsInPreviousRow)
                 {
-                    prevHeight = vectorOfItems[numberOfItemsInPreviousRow - 1]->geometry().height();
+                    prevHeight = vectorOfItems[numberOfItemsInPreviousRow - 1]->geometry().height() + _spacingBetweenItems;
                     heights[i] = prevHeight;
                 }
                 else
+                {
                     prevHeight = heights[i];
-                QPoint pt(tmpWidth, prevHeight + _spacingBetweenItems * numberOfRows);
+                }
+                QPoint pt(tmpWidth, prevHeight);
                 QSize sz(vectorOfItems[i + j]->geometry().width(), tmpHeight);
                 QRect rc(pt, sz);
                 vectorOfItems[i + j]->setGeometry(rc);
@@ -194,22 +197,36 @@ void Container::masonryLayoutDifferentWidths()
             {
                 if (i >= numberOfItemsInPreviousRow)
                 {
-                    prevHeight = vectorOfItems[numberOfItemsInPreviousRow - 1]->geometry().height();
+                    prevHeight = vectorOfItems[numberOfItemsInPreviousRow - 1]->geometry().height() + _spacingBetweenItems;
                     heights[i] = prevHeight;
                 }
+                else if (heights[i + 1] == 0)
+                {
+                    if (widths[i + j - numberOfItemsInPreviousRow - 1] < tmpWidth + vectorOfItems[i + j]->geometry().width())
+                        prevHeight = heights[i - 1] - vectorOfItems[i + j - 1]->geometry().height() - _spacingBetweenItems;
+                    else
+                        prevHeight = heights[i];
+                }
                 else
+                {
                     prevHeight = heights[i + 1];
-                QPoint pt(tmpWidth, prevHeight + _spacingBetweenItems * numberOfRows);
+                }
+                QPoint pt(tmpWidth, prevHeight);
                 QSize sz(vectorOfItems[i + j]->geometry().width(), tmpHeight);
                 QRect rc(pt, sz);
                 vectorOfItems[i + j]->setGeometry(rc);
             }
             numberOfColumns++;      
-            heights[i] += tmpHeight;
-            tmpWidth += vectorOfItems[i + j]->geometry().width() + _spacingBetweenItems;
+            heights[i] += (tmpHeight + _spacingBetweenItems);
+            tmpWidth += vectorOfItems[i + j]->geometry().width();
+            widths[i + j] = tmpWidth;
+            tmpWidth += _spacingBetweenItems;
         }
-        j += numberOfColumns;
         numberOfItemsInPreviousRow = numberOfColumns;
+        j += numberOfColumns;  
     }
     heights.clear();
 }
+
+/*(vectorOfItems[i + j]->geometry().width() <=
+                    vectorOfItems[i + j - numberOfItemsInPreviousRow]->geometry().width()) || // ширина текущего и над ним*/
