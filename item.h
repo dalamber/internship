@@ -8,11 +8,9 @@ namespace masonry
     // Abstract representation of element to be displayed.
     class Item
     {
+        //Q_OBJECT
     public:
         virtual ~Item() = 0 {}
-        /*{
-            std::printf("Destructor!");
-        }*/
 
         // Returns height for given width.
         // Must be implemented by Item inheritor.

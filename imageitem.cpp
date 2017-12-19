@@ -25,8 +25,3 @@ quint32 ImageItem::heightForWidth(quint32 width)
 {
     return ((imageSize.height() * width) / imageSize.width());
 }
-
-void ImageItem::setRectangle(QPoint &point, QSize &size)
-{
-    _geometry = QRect(point, size);
-}

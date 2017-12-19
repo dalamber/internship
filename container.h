@@ -42,9 +42,8 @@ namespace masonry
         quint32 _itemMinimumWidth;
         quint32 _itemMaximumWidth;
         std::vector<Item *> vectorOfItems;
-        // Masonry
         void masonryLayout(quint32 numberOfColumns, quint32 itemWidth);
-        void masonryLayoutDifferentWidths();
+        //void masonryLayoutDifferentWidths();
     };
 }
 
