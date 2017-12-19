@@ -25,17 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mywidget.cpp \
+        mymainwidget.cpp \
     container.cpp \
     imageitem.cpp
 
 HEADERS += \
-    mywidget.h \
     container.h \
     imageitem.h \
-    item.h
-
-FORMS += \
-        mywidget.ui
+    item.h \
+    mymainwidget.h
 
 DISTFILES +=
