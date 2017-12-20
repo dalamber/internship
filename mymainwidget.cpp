@@ -6,6 +6,7 @@ using namespace masonry;
 
 void MyMainWidget::addItemAndWidget(Item *item, QWidget *w)
 {
+   w->setGeometry(item->geometry());
    widgetMap.insert(std::pair<Item *, QWidget *> (item, w));
 }
 

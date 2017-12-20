@@ -14,29 +14,40 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MyMainWidget w;
-    QSize myContainerSize(130, 130);
+    QSize myContainerSize(500, 500);
     Container mycontainer(myContainerSize);
-    mycontainer.setItemMinimumWidth(20);
+    mycontainer.setItemMinimumWidth(60);
     if (myContainerSize.width() < mycontainer.itemMinimumWidth())
     {
         qDebug() << "Error\n";
         return a.exit();
     }
-    mycontainer.setItemMaximumWidth(30);
+    mycontainer.setItemMaximumWidth(80);
     mycontainer.setSpacingBetweenItems(10);
 
-    ImageItem item1(QSize(25, 50));
-    ImageItem item2(QSize(25, 30));
-    ImageItem item3(QSize(25, 50));
-    ImageItem item4(QSize(25, 70));
-    ImageItem item5(QSize(25, 40));
-    ImageItem item6(QSize(25, 45));
-    ImageItem item7(QSize(25, 50));
-    ImageItem item8(QSize(25, 50));
-    ImageItem item9(QSize(25, 110));
-    ImageItem item10(QSize(25, 80));
-    ImageItem item11(QSize(25, 30));
+    ImageItem item1(QSize(100, 200));
+    ImageItem item2(QSize(100, 60));
+    ImageItem item3(QSize(100, 90));
+    ImageItem item4(QSize(100, 170));
+    ImageItem item5(QSize(100, 240));
+    ImageItem item6(QSize(100, 145));
+    ImageItem item7(QSize(100, 200));
+    ImageItem item8(QSize(100, 100));
+    ImageItem item9(QSize(100, 200));
+    ImageItem item10(QSize(100, 160));
+    ImageItem item11(QSize(100, 120));
 
+    QPushButton ok1("1", &w);
+    QPushButton ok2("2", &w);
+    QPushButton ok3("3", &w);
+    QPushButton ok4("4", &w);
+    QPushButton ok5("5", &w);
+    QPushButton ok6("6", &w);
+    QPushButton ok7("7", &w);
+    QPushButton ok8("8", &w);
+    QPushButton ok9("9", &w);
+    QPushButton ok10("10", &w);
+    QPushButton ok11("11", &w);
 
     mycontainer.addItem(&item1);
     mycontainer.addItem(&item2);
@@ -50,23 +61,23 @@ int main(int argc, char *argv[])
     mycontainer.addItem(&item10);
     mycontainer.addItem(&item11);
 
-    mycontainer.setContainerSize(QSize(130, 400)); //95
+    mycontainer.setContainerSize(QSize(400, 500)); // masonry works here
 
-    qDebug() << item1.geometry().topLeft().rx() << item1.geometry().topLeft().ry() << item1.geometry().width() << item1.geometry().height() << "\n";
-    qDebug() << item2.geometry().topLeft().rx() << item2.geometry().topLeft().ry() << item2.geometry().width() << item2.geometry().height() << "\n";
-    qDebug() << item3.geometry().topLeft().rx() << item3.geometry().topLeft().ry() << item3.geometry().width() << item3.geometry().height() << "\n";
-    qDebug() << item4.geometry().topLeft().rx() << item4.geometry().topLeft().ry() << item4.geometry().width() << item4.geometry().height() << "\n";
-    qDebug() << item5.geometry().topLeft().rx() << item5.geometry().topLeft().ry() << item5.geometry().width() << item5.geometry().height() << "\n";
-    qDebug() << item6.geometry().topLeft().rx() << item6.geometry().topLeft().ry() << item6.geometry().width() << item6.geometry().height() << "\n";
-    qDebug() << item7.geometry().topLeft().rx() << item7.geometry().topLeft().ry() << item7.geometry().width() << item7.geometry().height() << "\n";
-    qDebug() << item8.geometry().topLeft().rx() << item8.geometry().topLeft().ry() << item8.geometry().width() << item8.geometry().height() << "\n";
-    qDebug() << item9.geometry().topLeft().rx() << item9.geometry().topLeft().ry() << item9.geometry().width() << item9.geometry().height() << "\n";
-    qDebug() << item10.geometry().topLeft().rx() << item10.geometry().topLeft().ry() << item10.geometry().width() << item10.geometry().height() << "\n";
-    qDebug() << item11.geometry().topLeft().rx() << item11.geometry().topLeft().ry() << item11.geometry().width() << item11.geometry().height() << "\n";
+    w.setGeometry(200, 200, mycontainer.containerWidth(), 500);
 
-    qDebug() << "Nice!";
+    w.addItemAndWidget(&item1, &ok1);
+    w.addItemAndWidget(&item2, &ok2);
+    w.addItemAndWidget(&item3, &ok3);
+    w.addItemAndWidget(&item4, &ok4);
+    w.addItemAndWidget(&item5, &ok5);
+    w.addItemAndWidget(&item6, &ok6);
+    w.addItemAndWidget(&item7, &ok7);
+    w.addItemAndWidget(&item8, &ok8);
+    w.addItemAndWidget(&item9, &ok9);
+    w.addItemAndWidget(&item10, &ok10);
+    w.addItemAndWidget(&item11, &ok11);
 
-    //w.show();
+    w.show();
 
-    return a.exit();
+    return a.exec();
 }

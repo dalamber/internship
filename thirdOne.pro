@@ -25,9 +25,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mymainwidget.cpp \
     container.cpp \
-    imageitem.cpp
+    imageitem.cpp \
+    mymainwidget.cpp
 
 HEADERS += \
     container.h \

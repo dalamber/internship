@@ -110,42 +110,57 @@ std::vector<Item *> Container::items() const
 // Masonry
 void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
 {
-    quint32 *heights = new quint32[numberOfColumns];
+    quint32 tmpWidth = 0;
+    quint32 numberOfItems = 0;// мера заполненности контейнера по ширине
+    std::vector<quint32> heights(numberOfColumns);
     for(quint32 i = 0; i < numberOfColumns; ++i)
         heights[i] = 0;
 
-    for(quint32 j = 0; j < vectorOfItems.size(); j += numberOfColumns)
+    for(quint32 j = 0; j < vectorOfItems.size();)
     {
-        for (quint32 i = 0; i < numberOfColumns; i++)
+        numberOfItems = 0;
+        tmpWidth = 0;
+        for (quint32 i = 0; i < vectorOfItems.size(); ++i)
         {
             if ((i + j) >= vectorOfItems.size())
+            {
+                numberOfItems = i;
                 break;
+            }
+            if (tmpWidth - _spacingBetweenItems + itemWidth >  containerSize.width())
+            {
+                numberOfItems = i;
+                break;
+            }
             quint32 tmpHeight = vectorOfItems[i + j]->heightForWidth(itemWidth);
             // группируем маловысотные элементы вместе, друг под другом
-            if (((i >= 2) && ((tmpHeight + vectorOfItems[i + j - 1]->geometry().height()) <=
-                              vectorOfItems[i + j - 2]->geometry().height())) ||
-                    ((i == 1) && (tmpHeight + heights[i - 1] <= heights[numberOfColumns - i])))
+            if (((numberOfItems >= 2) && (tmpHeight + heights[numberOfItems - 1] <= heights[numberOfItems - 2])) ||
+                    ((numberOfItems == 1) && (tmpHeight + heights[numberOfItems - 1] <= heights[1])))
             {
-                QPoint pt((i - 1) * itemWidth + (i - 1) * _spacingBetweenItems,
-                          heights[i - 1] + (_spacingBetweenItems * (j / numberOfColumns)) + _spacingBetweenItems);
+                QPoint pt((numberOfItems - 1) * itemWidth + (numberOfItems - 1) * _spacingBetweenItems,
+                          heights[numberOfItems - 1]);
                 QSize sz(itemWidth, tmpHeight);
                 QRect rc(pt, sz);
                 vectorOfItems[i + j]->setGeometry(rc);
-                heights[i - 1] += tmpHeight;
-                //--i; // to be fixed
+                heights[numberOfItems - 1] += tmpHeight + _spacingBetweenItems;
             }
             else
             {
-                QPoint pt(i * itemWidth + i * _spacingBetweenItems,
-                          heights[i] + _spacingBetweenItems * (j / numberOfColumns));
+                QPoint pt(numberOfItems * itemWidth + numberOfItems * _spacingBetweenItems,
+                          heights[numberOfItems]);
                 QSize sz(itemWidth, tmpHeight);
                 QRect rc(pt, sz);
                 vectorOfItems[i + j]->setGeometry(rc);
-                heights[i] += tmpHeight;
+                heights[numberOfItems] += tmpHeight + _spacingBetweenItems;
+                tmpWidth += vectorOfItems[i + j]->geometry().width();
+                tmpWidth +=  _spacingBetweenItems;
+                ++numberOfItems;
             }
         }
+        j += numberOfItems;
     }
-    delete[] heights;
+    containerSize.setWidth(itemWidth * numberOfColumns + _spacingBetweenItems * (numberOfColumns - 1));
+    heights.clear();
 }
 
 // Пока что очень сырая версия
