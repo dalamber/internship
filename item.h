@@ -6,12 +6,10 @@
 namespace masonry
 {
     // Abstract representation of element to be displayed.
-    class Item
+    class Item : public QObject
     {
-        //Q_OBJECT
+        Q_OBJECT
     public:
-        virtual ~Item() = 0 {}
-
         // Returns height for given width.
         // Must be implemented by Item inheritor.
         virtual quint32 heightForWidth(quint32 width) = 0;
@@ -33,7 +31,7 @@ namespace masonry
 
     signals:
         // Container emits this signal when Item geometry has been changed
-        void geometryChanged() {}
+        void geometryChanged();
 
     protected:
         QRect _geometry;

@@ -1,5 +1,5 @@
 #include <QtWidgets>
-#include "Item.h"
+#include "item.h"
 #include "mymainwidget.h"
 
 using namespace masonry;
