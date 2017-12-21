@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     if (myContainerSize.width() < mycontainer.itemMinimumWidth())
     {
         qDebug() << "Error\n";
-        return a.exit();
+        return 1;
     }
     mycontainer.setItemMaximumWidth(80);
     mycontainer.setSpacingBetweenItems(10);

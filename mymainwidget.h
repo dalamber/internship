@@ -2,7 +2,7 @@
 #define MYMAINWIDGET_H
 
 #include <QtWidgets>
-#include "Item.h"
+#include "item.h"
 
 using namespace masonry;
 
