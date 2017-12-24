@@ -8,8 +8,9 @@ namespace masonry
     class Container
     {
     public:
+        Container();
         // Ctor accepts initial container size.
-        explicit Container(const QSize &size); //const
+        explicit Container(const QSize &size);
         ~Container();
 
         // Sets new container size.
@@ -31,7 +32,7 @@ namespace masonry
         void addItem(Item *item);
 
         // Removes Item from container.
-        void removeItem(Item *item);
+        //void removeItem(Item *item);
 
         // Returns ordered list of stored Items
         std::vector<Item *> items() const;

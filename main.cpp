@@ -1,29 +1,32 @@
-#include <QApplication>
-
-#include <QtWidgets>
-#include <QSize>
-
 #include "container.h"
 #include "imageitem.h"
 #include "item.h"
 #include "mymainwidget.h"
+
+#include <QApplication>
+#include <QSize>
+#include <QtWidgets>
 
 using namespace masonry;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QSize myContainerSize(300, 500);
+    QScrollArea *area = new QScrollArea;
     MyMainWidget w;
-    QSize myContainerSize(500, 500);
-    Container mycontainer(myContainerSize);
-    mycontainer.setItemMinimumWidth(60);
-    if (myContainerSize.width() < mycontainer.itemMinimumWidth())
+    w.setMinimumHeight(2200);
+    area->setWidgetResizable(true);
+    area->setWidget(&w);
+    Container myContainer(myContainerSize);
+    myContainer.setItemMinimumWidth(60);
+    if (myContainerSize.width() < myContainer.itemMinimumWidth())
     {
         qDebug() << "Error\n";
         return 1;
     }
-    mycontainer.setItemMaximumWidth(80);
-    mycontainer.setSpacingBetweenItems(10);
+    myContainer.setItemMaximumWidth(120);
+    myContainer.setSpacingBetweenItems(10);
 
     ImageItem item1(QSize(100, 200));
     ImageItem item2(QSize(100, 60));
@@ -32,10 +35,22 @@ int main(int argc, char *argv[])
     ImageItem item5(QSize(100, 240));
     ImageItem item6(QSize(100, 145));
     ImageItem item7(QSize(100, 200));
-    ImageItem item8(QSize(100, 100));
+    ImageItem item8(QSize(100, 150));
     ImageItem item9(QSize(100, 200));
     ImageItem item10(QSize(100, 160));
     ImageItem item11(QSize(100, 120));
+
+    myContainer.addItem(&item1);
+    myContainer.addItem(&item2);
+    myContainer.addItem(&item3);
+    myContainer.addItem(&item4);
+    myContainer.addItem(&item5);
+    myContainer.addItem(&item6);
+    myContainer.addItem(&item7);
+    myContainer.addItem(&item8);
+    myContainer.addItem(&item9);
+    myContainer.addItem(&item10);
+    myContainer.addItem(&item11);
 
     QPushButton ok1("1", &w);
     QPushButton ok2("2", &w);
@@ -49,35 +64,23 @@ int main(int argc, char *argv[])
     QPushButton ok10("10", &w);
     QPushButton ok11("11", &w);
 
-    mycontainer.addItem(&item1);
-    mycontainer.addItem(&item2);
-    mycontainer.addItem(&item3);
-    mycontainer.addItem(&item4);
-    mycontainer.addItem(&item5);
-    mycontainer.addItem(&item6);
-    mycontainer.addItem(&item7);
-    mycontainer.addItem(&item8);
-    mycontainer.addItem(&item9);
-    mycontainer.addItem(&item10);
-    mycontainer.addItem(&item11);
+    w.addWidget(&ok1);
+    w.addWidget(&ok2);
+    w.addWidget(&ok3);
+    w.addWidget(&ok4);
+    w.addWidget(&ok5);
+    w.addWidget(&ok6);
+    w.addWidget(&ok7);
+    w.addWidget(&ok8);
+    w.addWidget(&ok9);
+    w.addWidget(&ok10);
+    w.addWidget(&ok11);
 
-    mycontainer.setContainerSize(QSize(400, 500)); // masonry works here
+    w.setContainer(myContainer);
 
-    w.setGeometry(200, 200, mycontainer.containerWidth(), 500);
+    area->setGeometry(200, 200, myContainer.containerWidth(), 500);
 
-    w.addItemAndWidget(&item1, &ok1);
-    w.addItemAndWidget(&item2, &ok2);
-    w.addItemAndWidget(&item3, &ok3);
-    w.addItemAndWidget(&item4, &ok4);
-    w.addItemAndWidget(&item5, &ok5);
-    w.addItemAndWidget(&item6, &ok6);
-    w.addItemAndWidget(&item7, &ok7);
-    w.addItemAndWidget(&item8, &ok8);
-    w.addItemAndWidget(&item9, &ok9);
-    w.addItemAndWidget(&item10, &ok10);
-    w.addItemAndWidget(&item11, &ok11);
-
-    w.show();
+    area->show(); //w.show();
 
     return a.exec();
 }
