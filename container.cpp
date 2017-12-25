@@ -47,6 +47,8 @@ void Container::setContainerSize(const QSize &size)
     if (flagDifferentWidths == false)
     {
         quint32 numberOfColumns = containerSize.width() / (_itemMinimumWidth + _spacingBetweenItems);
+        if (numberOfColumns < 1)
+            numberOfColumns = 1;
         quint32 numberOfSpaces = numberOfColumns - 1;
         quint32 itemWidth = (containerSize.width() - (numberOfSpaces * _spacingBetweenItems)) / numberOfColumns;
         if (itemWidth > _itemMaximumWidth)
@@ -143,7 +145,7 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
     }
     else
     {
-        for(quint32 j = 0; j < vectorOfItems.size();)
+        for (quint32 j = 0; j < vectorOfItems.size();)
         {
             numberOfFilledColumns = 0;
             tmpWidth = 0;
@@ -154,7 +156,7 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
                     numberOfFilledColumns = i;
                     break;
                 }
-                if (tmpWidth - _spacingBetweenItems + itemWidth > containerSize.width())
+                if (tmpWidth + itemWidth > containerSize.width())
                 {
                     numberOfFilledColumns = i;
                     break;

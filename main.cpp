@@ -78,9 +78,10 @@ int main(int argc, char *argv[])
 
     w.setContainer(myContainer);
 
+    w.setGeometry(200, 200, myContainer.containerWidth(), 500);
     area->setGeometry(200, 200, myContainer.containerWidth(), 500);
 
-    area->show(); //w.show();
+    area->show();
 
     return a.exec();
 }
