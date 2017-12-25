@@ -16,11 +16,6 @@ void MyMainWidget::connectItemAndWidget(Item *item, int i)
    widgetVector[i]->setGeometry(item->geometry());
 }
 
-Container MyMainWidget::container()
-{
-    return myContainer;
-}
-
 void MyMainWidget::resizeEvent(QResizeEvent * e)
 {
     //QWidget::resizeEvent(e);
@@ -36,14 +31,6 @@ void MyMainWidget::resizeEvent(QResizeEvent * e)
 void MyMainWidget::setContainer(Container c)
 {
     myContainer = c;
-}
-
-void MyMainWidget::setContainerSettings(const QSize &size, quint32 minWidth, quint32 maxWidth, quint32 spacing)
-{
-    myContainer = Container(size);
-    myContainer.setItemMinimumWidth(minWidth);
-    myContainer.setItemMaximumWidth(maxWidth);
-    myContainer.setSpacingBetweenItems(spacing);
 }
 
 std::vector <QWidget *> MyMainWidget::widgets() const

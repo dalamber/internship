@@ -174,7 +174,7 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
                 }
                 else if (((numberOfFilledColumns >= 2)
                      && (tmpHeight + heights[numberOfFilledColumns - 1] <= heights[numberOfFilledColumns - 2]))
-                        || ((numberOfFilledColumns == 1) && (tmpHeight + heights[numberOfFilledColumns - 1] <= heights[1])))
+                        || ((numberOfFilledColumns == 1) && (tmpHeight + heights[0] <= heights[1])))
                 {
                     QPoint pt((numberOfFilledColumns - 1) * itemWidth + (numberOfFilledColumns - 1) * _spacingBetweenItems,
                               heights[numberOfFilledColumns - 1]);
