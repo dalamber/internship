@@ -12,12 +12,10 @@ class MyMainWidget : public QWidget
 {
 public:
     void addWidget(QWidget *w);
-    void connectItemAndWidget(Item *item, int i);
-    void resizeEvent(QResizeEvent * e);
-    void setContainer(Container c);
-    std::vector <QWidget *> widgets() const;
+    void resizeEvent(QResizeEvent * e) override;
+    void setContainer(QSharedPointer<Container> c); // пока так
 private:
-    Container myContainer;
+    QSharedPointer<Container> myContainer;
     std::vector <QWidget *> widgetVector;
 };
 

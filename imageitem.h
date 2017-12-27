@@ -7,7 +7,6 @@ namespace masonry
 {
     class ImageItem : public Item
     {
-        Q_OBJECT
     public:
         ImageItem();
         explicit ImageItem(const QSize &size);

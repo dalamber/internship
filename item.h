@@ -17,10 +17,10 @@ namespace masonry
         void setGeometry(const QRect &geometry)
         {
             _geometry = geometry;
-            emit geometryChanged();
+            emit geometryChanged(_geometry);
         }
     signals:
-        void geometryChanged();
+        void geometryChanged(QRect &newGeometry);
     protected:
         QRect _geometry;
     };

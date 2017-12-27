@@ -11,29 +11,12 @@ void MyMainWidget::addWidget(QWidget *w)
     widgetVector.push_back(w);
 }
 
-void MyMainWidget::connectItemAndWidget(Item *item, int i)
-{
-   widgetVector[i]->setGeometry(item->geometry());
-}
-
 void MyMainWidget::resizeEvent(QResizeEvent * e)
 {
-    //QWidget::resizeEvent(e);
-    myContainer.setContainerSize(this->size());
-    std::vector<Item *> tmpItems;
-    tmpItems = myContainer.items();
-    for (int i = 0; i < tmpItems.size(); ++i)
-    {
-        connectItemAndWidget(tmpItems[i], i);
-    }
+    myContainer->setContainerSize(this->size());
 }
 
-void MyMainWidget::setContainer(Container c)
+void MyMainWidget::setContainer(QSharedPointer<Container> c)
 {
     myContainer = c;
-}
-
-std::vector <QWidget *> MyMainWidget::widgets() const
-{
-    return widgetVector;
 }
