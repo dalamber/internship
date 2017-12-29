@@ -37,25 +37,25 @@ int main(int argc, char *argv[])
     quint32 wd = 200;
     for (quint32 i = 0; i < itemCount; ++i)
     {
-        quint32 ht = qrand() % 100 + 300;
-        ImageItem *item = new ImageItem(QSize(wd, ht));
-        myContainer->addItem(item);
-        WebImageWidget *wdgt = new WebImageWidget();
         QString myUrl = "http://lorempixel.com/200/200/";
-        wdgt->getImage(myUrl);
         MyCustomWidget *custom = new MyCustomWidget();
-        custom->makeLayout(wdgt);
+        custom->getImage(myUrl);
+        int ht = custom->makeLayout();
         custom->setParent(&w);
         w.addWidget(custom);
+        ImageItem *item = new ImageItem(QSize(wd, ht));
+        myContainer->addItem(item);
         custom->setStyleSheet("border: 1px solid black"); // for testing
         QObject::connect(item, &ImageItem::geometryChanged, custom, [item, custom] (QRect)
         {
-           custom->setGeometry(item->geometry());
+            custom->setNewGeometry(item->geometry());
         });
     }
 
     w.setContainer(myContainer);
 
+    w.setMinimumWidth(myContainer->itemMinimumWidth());
+    area->setMinimumWidth(myContainer->itemMinimumWidth() + 20);
     w.setGeometry(200, 200, myContainer->containerWidth(), 500);
     area->setGeometry(200, 200, myContainer->containerWidth(), 500);
 

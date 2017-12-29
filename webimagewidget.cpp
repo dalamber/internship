@@ -12,11 +12,15 @@ WebImageWidget::WebImageWidget()
 void WebImageWidget::getImage(QString &url)
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, SIGNAL(finished(QNetworkReply *)),  // написание по новому стандарту выдавало ошибку,
-            this, SLOT(replyFinished(QNetworkReply *))); // пока что написал так
+    QObject::connect(manager, &QNetworkAccessManager::finished, this, &WebImageWidget::replyFinished);
     QUrl _url = QUrl(url);
     QNetworkRequest request(_url);
     manager->get(request);
+}
+
+void WebImageWidget::resizeLabel()
+{
+    _label->setGeometry(this->geometry());
 }
 
 void WebImageWidget::replyFinished(QNetworkReply *reply)
@@ -27,11 +31,12 @@ void WebImageWidget::replyFinished(QNetworkReply *reply)
     }
     else
     {
-        QPixmap myPixmap;
-        myPixmap.loadFromData(reply->readAll());
-        _label->setFixedWidth(myPixmap.width());
-        _label->setFixedHeight(myPixmap.height());
-        _label->setPixmap(myPixmap);
         _label->setScaledContents(true);
+        myPixmap.loadFromData(reply->readAll());
+        _label->setMinimumWidth(myPixmap.width());
+        _label->setMinimumHeight(myPixmap.height());
+        _label->setGeometry(this->geometry());
+        _label->setPixmap(myPixmap);
     }
+    reply->deleteLater();
 }

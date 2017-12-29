@@ -9,9 +9,13 @@ class MyCustomWidget : public QWidget
 {
 public:
     MyCustomWidget();
-    void makeLayout(WebImageWidget *w);
+    void getImage(QString &url);
+    int makeLayout();
+    void setNewGeometry(const QRect &geometry);
 private:
-    QVBoxLayout *layout;
+    QVBoxLayout *layout; 
+    WebImageWidget *w;
+    QString getRandomString() const;
 };
 
 #endif // MYCUSTOMWIDGET_H

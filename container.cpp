@@ -34,28 +34,14 @@ Container::~Container()
 void Container::setContainerSize(const QSize &size)
 {
     _impl->containerSize = size;
-    bool flagDifferentWidths = false;
-    for (int i = 1; i < _impl->vectorOfItems.size(); ++i)
-    {
-        if (_impl->vectorOfItems[i]->geometry().width() != _impl->vectorOfItems[i - 1]->geometry().width())
-        {
-            flagDifferentWidths = true;
-            break;
-        }
-    }
-    if (flagDifferentWidths == false)
-    {
-        quint32 numberOfColumns = _impl->containerSize.width() / (_impl->_itemMinimumWidth + _impl->_spacingBetweenItems);
-        if (numberOfColumns < 1)
-            numberOfColumns = 1;
-        quint32 numberOfSpaces = numberOfColumns - 1;
-        quint32 itemWidth = (_impl->containerSize.width() - (numberOfSpaces * _impl->_spacingBetweenItems)) / numberOfColumns;
-        if (itemWidth > _impl->_itemMaximumWidth)
-            itemWidth = _impl->_itemMaximumWidth;
-        masonryLayout(numberOfColumns, itemWidth);
-    }
-    else
-        qDebug() << "Wrong!";
+    quint32 numberOfColumns = _impl->containerSize.width() / (_impl->_itemMinimumWidth + _impl->_spacingBetweenItems);
+    if (numberOfColumns < 1)
+        numberOfColumns = 1;
+    quint32 numberOfSpaces = numberOfColumns - 1;
+    quint32 itemWidth = (_impl->containerSize.width() - (numberOfSpaces * _impl->_spacingBetweenItems)) / numberOfColumns;
+    if (itemWidth > _impl->_itemMaximumWidth)
+        itemWidth = _impl->_itemMaximumWidth;
+    masonryLayout(numberOfColumns, itemWidth);
 }
 
 void Container::setSpacingBetweenItems(quint32 spacing)
@@ -146,7 +132,7 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
             tmpWidth = 0;
             for (quint32 i = 0; ; ++i)
             {
-                if ((i + j) >= _impl->vectorOfItems.size())
+                if (((i + j) >= _impl->vectorOfItems.size()) || i >= heights.size())
                 {
                     numberOfFilledColumns = i;
                     break;
@@ -293,4 +279,17 @@ void Container::masonryLayoutDifferentWidths()
     }
     heights.clear();
 }
+*/
+
+/*  bool flagDifferentWidths = false;
+    for (int i = 1; i < _impl->vectorOfItems.size(); ++i)
+    {
+        if (_impl->vectorOfItems[i]->geometry().width() != _impl->vectorOfItems[i - 1]->geometry().width())
+        {
+            flagDifferentWidths = true;
+            break;
+        }
+    }
+    if (flagDifferentWidths == false)
+    {
 */

@@ -10,10 +10,12 @@ class WebImageWidget : public QWidget
 public:
     WebImageWidget();
     void getImage(QString &url);
+    void resizeLabel();
 private slots:
     void replyFinished(QNetworkReply *reply);
 private:
     QLabel *_label;
+    QPixmap myPixmap;
 };
 
 #endif // WEBIMAGEWIDGET_H
