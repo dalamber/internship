@@ -16,11 +16,15 @@ namespace masonry
         void setSpacingBetweenItems(quint32 spacing);
         void setItemMinimumWidth(quint32 width);
         void setItemMaximumWidth(quint32 width);
+        void setContainerHeight(quint32 height);
+        void enableCenterAlignment(bool enable);
 
         quint32 containerWidth() const;
         quint32 spacingBetweenItems() const;
         quint32 itemMinimumWidth() const;
         quint32 itemMaximumWidth() const;
+        quint32 containerHeight() const;
+        bool centerAlignment() const;
 
         void addItem(Item *item);
 
