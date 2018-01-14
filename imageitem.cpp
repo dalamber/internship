@@ -8,7 +8,7 @@ using namespace masonry;
 ImageItem::ImageItem()
 {
     imageSize = QSize(1, 1);
-    _geometry = QRect(QPoint(0, 0), QSize(1, 1));
+    _geometry = QRect(QPoint(0, 0), imageSize);
 }
 
 ImageItem::ImageItem(const QSize &size)

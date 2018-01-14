@@ -3,6 +3,7 @@
 #include "item.h"
 #include "mycustomwidget.h"
 #include "mymainwidget.h"
+#include "settingswidget.h"
 #include "webimagewidget.h"
 
 #include <QApplication>
@@ -18,18 +19,20 @@ int main(int argc, char *argv[])
     QSize myContainerSize(800, 500);
     QScrollArea *area = new QScrollArea;
     MyMainWidget w;
-    w.setMinimumHeight(4000);
-    area->setWidgetResizable(true);
+    w.setBaseSize(myContainerSize);
     area->setWidget(&w);
+    area->setWidgetResizable(true);
     QSharedPointer<Container> myContainer(new Container(myContainerSize));
-    myContainer->setItemMinimumWidth(200);
+    myContainer->setItemMinimumWidth(200); //200
     if (myContainerSize.width() < myContainer->itemMinimumWidth())
     {
         qDebug() << "Error\n";
         return 1;
     }
-    myContainer->setItemMaximumWidth(300);
+    myContainer->setItemMaximumWidth(300); //300
     myContainer->setSpacingBetweenItems(10);
+
+    myContainer->enableCenterAlignment(true); // center alignment has been enabled
 
     QTime now = QTime::currentTime();
     qsrand(now.msec());
@@ -40,7 +43,7 @@ int main(int argc, char *argv[])
         QString myUrl = "http://lorempixel.com/200/200/";
         MyCustomWidget *custom = new MyCustomWidget();
         custom->getImage(myUrl);
-        int ht = custom->makeLayout();
+        int ht = custom->makeLayout(i + 1);
         custom->setParent(&w);
         w.addWidget(custom);
         ImageItem *item = new ImageItem(QSize(wd, ht));
@@ -58,6 +61,10 @@ int main(int argc, char *argv[])
     area->setMinimumWidth(myContainer->itemMinimumWidth() + 20);
     w.setGeometry(200, 200, myContainer->containerWidth(), 500);
     area->setGeometry(200, 200, myContainer->containerWidth(), 500);
+
+    SettingsWidget stW(&w);
+    QObject::connect(&stW, &SettingsWidget::settingsChanged, &w, &MyMainWidget::newSettings);
+    stW.show();
 
     area->show();
 

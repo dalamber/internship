@@ -7,6 +7,7 @@ MyCustomWidget::MyCustomWidget()
 {
     layout = new QVBoxLayout(this);
     w = new WebImageWidget();
+    animation = new QPropertyAnimation(this, "geometry");
 }
 
 QString MyCustomWidget::getRandomString() const
@@ -39,7 +40,7 @@ void MyCustomWidget::getImage(QString &url)
     w->getImage(url);
 }
 
-int MyCustomWidget::makeLayout()
+int MyCustomWidget::makeLayout(int number)
 {
     int resultHeight = 200;
     w->setMinimumSize(200, 200);
@@ -47,13 +48,20 @@ int MyCustomWidget::makeLayout()
     layout->setMargin(0);
     layout->addWidget(w);
     QGridLayout *grid = new QGridLayout();
+    QLabel *label01 = new QLabel("Number", this);
+    label01->setMaximumHeight(30);
+    grid->addWidget(label01, 0, 0, 1, 1, Qt::AlignLeft);
+    QLabel *label02 = new QLabel(QString::number(number), this);
+    label02->setMaximumHeight(30);
+    grid->addWidget(label02, 0, 1, 1, 1, Qt::AlignRight);
+    resultHeight += 30;
     int labelCount = qrand() % 4 + 2;
-    for (int i = 0; i < labelCount; ++i)
+    for (int i = 1; i < labelCount; ++i)
     {
         QLabel *label1 = new QLabel(getRandomString(), this);
         label1->setMaximumHeight(30);
         grid->addWidget(label1, i, 0, 1, 1, Qt::AlignLeft);
-        QLabel *label2 = new QLabel(QString::number(i + 1), this);
+        QLabel *label2 = new QLabel(QString::number(i), this);
         label2->setMaximumHeight(30);
         grid->addWidget(label2, i, 1, 1, 1, Qt::AlignRight);
         resultHeight += 30;
@@ -64,6 +72,10 @@ int MyCustomWidget::makeLayout()
 
 void MyCustomWidget::setNewGeometry(const QRect &geometry)
 {
+    animation->setDuration(500);
+    animation->setStartValue(this->geometry());
     this->setGeometry(geometry);
     w->resizeLabel();
+    animation->setEndValue(this->geometry());
+    animation->start();
 }

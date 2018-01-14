@@ -10,12 +10,14 @@ set(MASONRY_SRCS container.cpp
         main.cpp
 	mycustomwidget.cpp
         mymainwidget.cpp
+        settingswidget.cpp
 	webimagewidget.cpp
         container.h
         imageitem.h
         item.h
 	mycustomwidget.h
         mymainwidget.h
+        settingswidget.h
 	webimagewidget.h)
 
 set (MASONRY_LIBS Qt5::Core Qt5::Network Qt5::Widgets)
