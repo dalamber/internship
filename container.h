@@ -3,6 +3,8 @@
 
 #include "item.h"
 
+#include <QtWidgets>
+
 namespace masonry
 {
     class Container
