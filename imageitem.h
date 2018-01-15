@@ -8,12 +8,12 @@ namespace masonry
     class ImageItem : public Item
     {
     public:
-        ImageItem();
         explicit ImageItem(const QSize &size);
         ~ImageItem();
         quint32 heightForWidth(quint32 width) override;
     private:
         QSize imageSize;
+        unsigned int preferredHeight = 0;
     };
 }
 

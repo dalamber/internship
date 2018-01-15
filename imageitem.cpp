@@ -5,14 +5,18 @@
 
 using namespace masonry;
 
-ImageItem::ImageItem()
+namespace
 {
-    imageSize = QSize(1, 1);
-    _geometry = QRect(QPoint(0, 0), imageSize);
+    static unsigned int g_Counter = 0;
 }
 
 ImageItem::ImageItem(const QSize &size)
 {
+    if (!(++g_Counter % 2))
+        preferredHeight = 100;
+    else
+        preferredHeight = 500;
+
     imageSize = size;
     _geometry.setSize(size);
 }
@@ -24,5 +28,7 @@ ImageItem::~ImageItem()
 
 quint32 ImageItem::heightForWidth(quint32 width)
 {
-    return ((imageSize.height() * width) / imageSize.width());
+    Q_UNUSED(width);
+
+    return preferredHeight;
 }
