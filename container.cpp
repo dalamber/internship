@@ -157,7 +157,7 @@ void Container::masonryLayout(quint32 numberOfColumns, quint32 itemWidth)
             tmpWidth = 0;
             for (quint32 i = 0; ; ++i)
             {
-                if (((i + j) >= _impl->vectorOfItems.size()) || i >= heights.size())
+                if (((i + j) >= _impl->vectorOfItems.size()))
                 {
                     numberOfFilledColumns = i;
                     break;
